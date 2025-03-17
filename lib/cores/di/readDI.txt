@@ -1,0 +1,21 @@
+# Thư mục DI (Dependency Injection) chủ yếu có nhiệm vụ quản lý 
+- việc khởi tạo và cung cấp các đối tượng (dependencies) mà các phần khác của ứng dụng cần sử dụng. 
+
+## Cụ thể:
+### Tổ chức trung tâm các dependency:
+- Tại đây, bạn có thể đăng ký các instance của các 
+  class như services, repository, view models, v.v... 
+  để các phần khác của ứng dụng có thể lấy ra một 
+  cách dễ dàng thông qua container DI.
+
+### Tăng tính linh hoạt và mở rộng:
+- Khi cần thay đổi hoặc mock một dependency 
+  (đặc biệt hữu ích cho việc test), 
+  bạn chỉ cần cập nhật tại một chỗ 
+  mà không ảnh hưởng đến toàn bộ codebase.
+
+### Giảm sự phụ thuộc cứng (tight coupling):
+- Dependency Injection giúp các thành phần 
+  trong ứng dụng không bị ràng buộc chặt chẽ 
+  với nhau, tạo điều kiện thuận lợi cho 
+  việc bảo trì và mở rộng.

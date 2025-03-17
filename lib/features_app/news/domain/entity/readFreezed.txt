@@ -1,0 +1,29 @@
+Sử dụng Freezed và JsonSerializable
+Ưu điểm:
+
+# Immutable & Copy:
+- Việc sử dụng @freezed giúp tạo ra các data class bất biến, 
+  có khả năng sử dụng copyWith để tạo ra bản sao với những 
+  thay đổi nhỏ, rất hữu ích trong quản lý trạng thái.
+# Hỗ trợ JSON Serialization:
+  Với @JsonSerializable (thông qua freezed_annotation), 
+  bạn dễ dàng chuyển đổi đối tượng sang JSON và ngược lại. 
+  Điều này thuận tiện cho việc giao tiếp với API.
+# Chẩn đoán và Debug:
+  Việc sử dụng DiagnosticableTreeMixin giúp hiển thị thông tin 
+  chi tiết về đối tượng trong quá trình debug và hỗ trợ cho Widget Inspector.
+
+###----------------File generated
+** news_entity.freezed.dart: 
+File này được tạo tự động, chứa các logic về copyWith, 
+toString, hashCode, và các mixin cho NewsEntity.
+
+** news_entity.g.dart:
+
+File này đảm nhiệm chuyển đổi giữa đối tượng và JSON.
+
+Cần lưu ý rằng nếu có bất kỳ thay đổi nào trong cấu trúc 
+của NewsEntity, bạn phải chạy lại lệnh build để cập nhật file này.
+
+flutter pub run build_runner build --delete-conflicting-outputs
+
