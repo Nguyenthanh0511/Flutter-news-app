@@ -1,6 +1,6 @@
 # Flutter News App
 
-Một ứng dụng tin tức được xây dựng bằng Flutter theo kiến trúc Clean Architecture, sử dụng Firebase Realtime Database để lưu trữ và truy xuất dữ liệu, BLoC cho quản lý trạng thái, Dependency Injection qua GetIt, GoRouter cho định tuyến và Freezed cho JSON serialization/immutable data classes.
+Một ứng dụng tin tức được xây dựng bằng Flutter theo kiến trúc Clean Architecture, sử dụng Firebase Realtime Database để lưu trữ và truy xuất dữ liệu, BLoC cho quản lý trạng thái, Dependency Injection qua GetIt và GoRouter cho định tuyến.
 
 ## 📌 Tính Năng Chính
 
@@ -84,6 +84,5 @@ flutter run
 ## 📝 Lưu Ý
 
 - **Asset Configuration**: Đảm bảo file google-services.json được đặt đúng vị trí và khai báo trong pubspec.yaml.
-- **Build Runner**: Nếu sử dụng Freezed, chạy `flutter pub run build_runner build` để cập nhật các file part.
 - **Phân trang với Firebase**: Trong TblRepositoryImplement, lưu ý khi dùng orderByKey(), các tham số startAt cần là String.
 - **Chạy trên nền tảng được hỗ trợ**: Firebase Realtime Database chủ yếu hỗ trợ Android, iOS và Web. Nếu chạy trên desktop, hãy kiểm tra tính tương thích của plugin.
