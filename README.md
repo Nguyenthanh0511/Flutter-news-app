@@ -51,3 +51,14 @@ Và chúng ta cùng bắt đầu.
   - Giờ ta sẽ code phần giao diện ở mainNewsScreen
   - Giờ sẽ cấu hình route và app
   - Đã gặp lỗi. Giờ fix đã ( Xem bug nhé ) => Thiếu ca sử dụng call api
+  - Mình đã xây xong trang main tin tức rồi. Dữ liệu đấy mình call từ api mẫu để hiển thị lên.
+  - Mình chọn firebase để lưu trữ dữ liệu nhé. Giờ bắt đầu cấu hình firebase ( Dựa vào project tutoril connect firebase mình đã làm trước đó)
+  - Tạo project ( Néu chưa có )
+  - DI thêm firebase
+  - Tạo tbl_repository và implement
+  - Ca sử dụng
+  - Giờ sẽ Dependency injection cho app
+  - Viết thêm ca sử dụng lấy dữ liệu đã call từ api đẩy vào firebase (bảng news)
+  - ca sử dụng đấy chỉ lên chạy một lần thui nhé. Chạy lại nhiều là database lặp lại nhiều bản ghi
+  - Giờ test thử nhé
+  - Chưa thêm ca sử dụng vào bloc

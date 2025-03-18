@@ -1,10 +1,19 @@
 part of 'main_news_bloc.dart';
-//Dependency thêm ( equatable)
 
-
-abstract class MainNewsEvent extends Equatable{
+abstract class MainNewsEvent extends Equatable {
   @override
   List<Object> get props => [];
-
 }
-class MainNewsGetRecentEvent extends MainNewsEvent{}
+
+// Event cho lần load đầu tiên
+class LoadInitialNewsEvent extends MainNewsEvent {
+  final bool sortByDate;
+  
+  LoadInitialNewsEvent({this.sortByDate = false});
+}
+
+// Event cho load thêm
+class LoadMoreNewsEvent extends MainNewsEvent {}
+
+// Event làm mới dữ liệu
+class RefreshNewsEvent extends MainNewsEvent {}

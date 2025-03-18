@@ -184,7 +184,6 @@ class _$_NewsEntity with DiagnosticableTreeMixin implements _NewsEntity {
 
   factory _$_NewsEntity.fromJson(Map<String, dynamic> json) =>
       _$$_NewsEntityFromJson(json);
-
   @override
   final String? title;
   @override

@@ -19,6 +19,8 @@ dependencies:
   cached_network_image: 3.4.0
   go_router: 14.6.3
   google_fonts: 6.2.1 ## Hỗ trợ fetch data từ http ( request đến)
+  firebase_database: ^11.3.4
+  firebase_core: ^3.1.0
   flutter:
     sdk: flutter
 
@@ -42,7 +44,8 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-
+  assets:
+    - lib/cores/shared/connectFirebase/google-services.json
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

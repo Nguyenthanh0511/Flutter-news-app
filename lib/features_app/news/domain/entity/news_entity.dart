@@ -26,3 +26,5 @@ class NewsEntity with _$NewsEntity{ // Xu ly context này ( _TênEntityConText)
       _$NewsEntityFromJson(json); // Tạo một entity json
     
 }
+
+// Nó đây rùi nhé ( Không cần viết thêm code ( Chỉ việc tái sử dụng lại ))

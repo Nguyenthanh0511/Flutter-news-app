@@ -2,33 +2,81 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_news_app/features_app/news/domain/entity/news_entity.dart';
-import 'package:flutter_news_app/features_app/news/domain/repository/news_repository.dart'; // Cai nay chi la canh bao( warming)
-import 'package:flutter_news_app/cores/di/service_locator.dart';
-import 'package:flutter_news_app/features_app/news/domain/usecase/get_recent_news_usecase.dart';
-// PART (Chia nhỏ file ra dễ quản lsy)
+import 'package:flutter_news_app/features_app/news/domain/usecase/tbl_usecase.dart';
+
 part 'main_news_event.dart';
 part 'main_news_state.dart';
-// Theo kiến trúc BLOC đây là phần chính, để quán lý sự kiện và trạng trạng thái
 
+class MainNewsBloc extends Bloc<MainNewsEvent, MainNewsState> {
+  final TblUsecase<NewsEntity> tblUsecase;
+  static const int _pageSize = 10; // Số lượng item mỗi trang
 
-class MainNewsBloc extends Bloc<MainNewsEvent, MainNewsState>{
-  MainNewsBloc() : super(MainNewsInitialState()){ // Khi moi khởi tạo đây sẽ là trạng thái mặc định
-    on<MainNewsGetRecentEvent>(mainNewsGetRecentEvent); // Lắng nghe sự kiện và gọi đến
+  MainNewsBloc({required this.tblUsecase}) : super(NewsInitialState()) {
+    on<LoadInitialNewsEvent>(_onLoadInitial);
+    on<LoadMoreNewsEvent>(_onLoadMore);
+    on<RefreshNewsEvent>(_onRefresh);
   }
 
-  Future<void> mainNewsGetRecentEvent(
-    MainNewsGetRecentEvent event, Emitter<MainNewsState> emit ) async{
-      try{
-        emit(MainNewsLoadingState()); // Loading state
-        // Caasu hinh di ( dependency injection toi api)
-        // Gọi đến api
-        List<NewsEntity> news = await serviceLocator<GetUseCaseApi>().call(); // Tao them ca su dung ( api )
-        emit(MainNewsGetRecentNewsSuccessState(news:news));
-        
-      }
-      catch(e){
-        emit(MainNewsErrorState(e.toString())); // Bắt lỗi
-      }
+  Future<void> _onLoadInitial(
+    LoadInitialNewsEvent event,
+    Emitter<MainNewsState> emit,
+  ) async {
+    try {
+      emit(NewsLoadingState());
+
+      final stream = tblUsecase.getList(
+        pageSize: _pageSize,
+        pageNumber: 1,
+        sortByDate: event.sortByDate,
+      );
+
+      final news = await stream.first;
+      emit(NewsLoadedState(
+        news: news,
+        currentPage: 1,
+        hasReachedMax: news.length < _pageSize,
+      ));
+    } catch (e) {
+      emit(NewsErrorState(e.toString()));
     }
-  
+  }
+
+  Future<void> _onLoadMore(
+    LoadMoreNewsEvent event,
+    Emitter<MainNewsState> emit,
+  ) async {
+    if (state is! NewsLoadedState) return;
+    final currentState = state as NewsLoadedState;
+
+    if (currentState.hasReachedMax) return;
+
+    try { 
+      emit(NewsLoadingState(oldNews: currentState.news));
+
+      final nextPage = currentState.currentPage + 1;
+      final stream = tblUsecase.getList(
+        pageSize: _pageSize,
+        pageNumber: nextPage,
+        sortByDate: false,
+      );
+
+      final newNews = await stream.first;
+      final allNews = [...currentState.news, ...newNews];
+
+      emit(NewsLoadedState(
+        news: allNews,
+        currentPage: nextPage,
+        hasReachedMax: newNews.length < _pageSize,
+      ));
+    } catch (e) {
+      emit(NewsErrorState(e.toString(), oldNews: currentState.news));
+    }
+  }
+
+  Future<void> _onRefresh(
+    RefreshNewsEvent event,
+    Emitter<MainNewsState> emit,
+  ) async {
+    add(LoadInitialNewsEvent());
+  }
 }

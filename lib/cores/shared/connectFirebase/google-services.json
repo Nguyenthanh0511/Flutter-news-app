@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "957906367755",
+    "firebase_url": "https://simpleappquestion-default-rtdb.firebaseio.com",
+    "project_id": "simpleappquestion",
+    "storage_bucket": "simpleappquestion.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:957906367755:android:460a5bd2caa64a37c01e0e",
+        "android_client_info": {
+          "package_name": "com.example.curd_firebase"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0Zzhz17WTdWqQdGlEef__s4HjpqwA-4A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

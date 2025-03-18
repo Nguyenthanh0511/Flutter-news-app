@@ -1,29 +1,36 @@
 part of 'main_news_bloc.dart';
+
 abstract class MainNewsState extends Equatable {
   @override
-  List<Object> get props=>[];
-
+  List<Object> get props => [];
 }
 
-class MainNewsInitialState extends MainNewsState{}
+class NewsInitialState extends MainNewsState {}
 
-class MainNewsLoadingState extends MainNewsState{}
+class NewsLoadingState extends MainNewsState {
+  final List<NewsEntity> oldNews;
+  
+  NewsLoadingState({this.oldNews = const []});
+}
 
-class  MainNewsGetRecentNewsSuccessState extends MainNewsState{
+class NewsLoadedState extends MainNewsState {
   final List<NewsEntity> news;
-  MainNewsGetRecentNewsSuccessState({required this.news});
+  final int currentPage;
+  final bool hasReachedMax;
+
+  NewsLoadedState({
+    required this.news,
+    required this.currentPage,
+    required this.hasReachedMax,
+  });
 
   @override
-  List<Object> get props => [news];
+  List<Object> get props => [news, currentPage, hasReachedMax];
 }
 
-class MainNewsErrorState extends MainNewsState{
+class NewsErrorState extends MainNewsState {
   final String message;
-  MainNewsErrorState(this.message);
-  @override
-  List<Object> get props =>[];
+  final List<NewsEntity> oldNews;
 
-}  
-
-
-
+  NewsErrorState(this.message, {this.oldNews = const []});
+}

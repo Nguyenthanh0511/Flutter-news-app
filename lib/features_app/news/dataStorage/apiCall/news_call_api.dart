@@ -8,6 +8,7 @@ class NewsApi{
 
   NewsApi({required this.dio, required this.apiKey});
 
+
   Future<List<NewsEntity>> getNewsByApi() async{
     // tao api tren web nhe( Bat dau tao api)
     final res = await dio.get('/v2/everything?q=tesla&from=2025-02-17&sortBy=publishedAt&apiKey=$apiKey');
