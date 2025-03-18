@@ -11,7 +11,7 @@ class NewsApi{
 
   Future<List<NewsEntity>> getNewsByApi() async{
     // tao api tren web nhe( Bat dau tao api)
-    final res = await dio.get('/v2/everything?q=tesla&from=2025-02-17&sortBy=publishedAt&apiKey=$apiKey');
+    final res = await dio.get('/v2/everything?q=tesla&from=2025-02-18&sortBy=publishedAt&apiKey=$apiKey');
     return List<Map<String, dynamic>>.from(res.data['articles']).map((e)=> NewsEntity.fromJson(e)).toList();
   }
 }

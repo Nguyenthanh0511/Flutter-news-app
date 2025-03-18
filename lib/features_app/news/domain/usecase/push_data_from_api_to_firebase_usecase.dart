@@ -21,7 +21,8 @@ class PushDataFromApiToFirebaseUsecase {
       for (var news in newsList) {
         print('Inserted news with ID: $news');
         final String code = DateTime.now().millisecondsSinceEpoch.toString();
-
+        news = news.copyWith(viewCount: 1);
+        news = news.copyWith(code: code);
         // Gọi hàm insertRecord từ TblUsecase để thêm tin tức vào bảng 'news'
         await newsTblUsecase.insertRecord(code, news);
       };

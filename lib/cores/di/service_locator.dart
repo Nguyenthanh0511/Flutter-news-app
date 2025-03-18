@@ -93,7 +93,6 @@ setupServiceLocator() async { // Cấu hình dịch vụ
     () => TblUsecase(repository: serviceLocator<TblRepository<NewsEntity>>())
   );
 
-
   ///Đăng ký các ca sử dụng news và user
   serviceLocator.registerLazySingleton<TblRepository<User>>(
     () => TblRepositoryImplement(databaseService: serviceLocator<DatabaseService>(), 
@@ -106,6 +105,4 @@ setupServiceLocator() async { // Cấu hình dịch vụ
   serviceLocator.registerLazySingleton<TblUsecase<User>>(
     () => TblUsecase(repository: serviceLocator<TblRepository<User>>())
   );
-
-
 }
