@@ -26,6 +26,7 @@ Future<void> main() async {
     errorMessage = e.toString();
     firebaseConnected = false;
   }
+  
   // Xử lý lỗi ở cấp độ Flutter
   FlutterError.onError = (FlutterErrorDetails details) {
     // In lỗi ra console
@@ -36,6 +37,7 @@ Future<void> main() async {
   };
   // Chạy ứng dụng và truyền trạng thái kết nối Firebase vào MainApp
   runApp(MainApp(
+    
     // firebaseConnected: firebaseConnected,
     // errorMessage: errorMessage,
   ));

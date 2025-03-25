@@ -21,6 +21,11 @@ dependencies:
   google_fonts: 6.2.1 ## Hỗ trợ fetch data từ http ( request đến)
   firebase_database: ^11.3.4
   firebase_core: ^3.1.0
+  intl: ^0.17.0
+  firebase_auth: 5.1.2
+  collection: ^1.18.0
+  image_picker: 1.1.1
+  firebase_storage: 12.3.6
   flutter:
     sdk: flutter
 
@@ -46,6 +51,8 @@ dev_dependencies:
 flutter:
   assets:
     - lib/cores/shared/connectFirebase/google-services.json
+    - lib\assets\images\default_avatar.png
+
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

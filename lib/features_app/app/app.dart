@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_news_app/features_app/app/route.dart';
 import 'package:flutter_news_app/features_app/app/themes.dart';
-import 'package:flutter_news_app/features_app/app/home_screen.dart';
 // Cấu hình dưới main.dart nữa là chạy app xem
 class MainApp extends StatelessWidget{
   // final bool firebaseConnected;
@@ -19,7 +18,7 @@ class MainApp extends StatelessWidget{
 
     return MaterialApp.router(
 
-      debugShowCheckedModeBanner: true,
+      debugShowCheckedModeBanner: false,
       // Connect firebase
        // Đọc cấu hình Firebase từ file JSON và tạo đối tượng FirebaseOptions
       theme: AppThemes.themeData,

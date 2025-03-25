@@ -2,19 +2,23 @@ import 'package:dio/dio.dart';
 import 'package:flutter_news_app/cores/network/network_client.dart';
 import 'package:flutter_news_app/cores/shared/contants.dart';
 import 'package:flutter_news_app/features_app/news/dataStorage/apiCall/news_call_api.dart';
-import 'package:flutter_news_app/features_app/news/dataStorage/repository/tbl_repository_implement.dart';
+import 'package:flutter_news_app/features_app/news/dataStorage/implementRepository/tbl_repository_implement.dart';
+import 'package:flutter_news_app/features_app/news/domain/entity/comment_entity.dart';
 import 'package:flutter_news_app/features_app/news/domain/entity/news_entity.dart';
 import 'package:flutter_news_app/features_app/news/domain/repository/news_repository.dart';
 import 'package:flutter_news_app/features_app/news/domain/repository/tbl_repository.dart';
 import 'package:flutter_news_app/features_app/news/domain/usecase/connect_firebase_usecase.dart';
 import 'package:flutter_news_app/features_app/news/domain/usecase/tbl_usecase.dart';
+import 'package:flutter_news_app/features_app/news/screens/bloc/auth/authen_bloc.dart';
 import 'package:flutter_news_app/features_app/news/screens/bloc/main_news_bloc.dart';
+import 'package:flutter_news_app/features_app/news/screens/bloc/profile/profile_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:flutter_news_app/features_app/news/dataStorage/repository/implement_repository.dart';
+import 'package:flutter_news_app/features_app/news/dataStorage/implementRepository/implement_repository.dart';
 import 'package:flutter_news_app/features_app/news/domain/usecase/get_recent_news_usecase.dart';
 import 'package:flutter_news_app/features_app/news/domain/usecase/push_data_from_api_to_firebase_usecase.dart';
 import 'package:flutter_news_app/features_app/news/domain/entity/user_entity.dart';
 import 'package:flutter_news_app/cores/shared/connectFirebase/database_service.dart';
+import 'package:flutter_news_app/features_app/news/service/authenService/auth_service.dart';
 final serviceLocator = GetIt.instance; // dependency theem get_it ( Để đăng ký các DI)
 
 // Sử dụng file để khởi tạo các instance dễ quản lý vòng đời ứng dụng
@@ -24,7 +28,11 @@ final serviceLocator = GetIt.instance; // dependency theem get_it ( Để đăng
 // - Init NetWorkClient với đối tượng Dio truyền vào constants từ  serviceLocator
 // - Trả về thuộc tính NetWorkClient với dio
 setupServiceLocator() async { // Cấu hình dịch vụ
-
+   // DI cho authen service
+  serviceLocator.registerLazySingleton<AuthService>(
+    () =>  AuthService()
+  );
+  serviceLocator.registerFactory<AuthenBloc>(() => AuthenBloc()); // Đăng ký MainNewsBloc mới khi request
   // Connect firebase
   // Đăng ký ConnectFirebaseUseCase trước
   serviceLocator.registerSingletonAsync<ConnectFirebaseUseCase>(
@@ -52,6 +60,8 @@ setupServiceLocator() async { // Cấu hình dịch vụ
 
   //News
   serviceLocator.registerFactory<MainNewsBloc>(()=>MainNewsBloc(tblUsecase: serviceLocator<TblUsecase<NewsEntity>>())); // Đăng ký MainNewsBloc mới khi request
+  serviceLocator.registerFactory<ProfileBloc>(() => ProfileBloc(tblUsecase: serviceLocator<TblUsecase<NewsEntity>>())); // Đăng ký ProfileBloc mới khi request
+  
   // serviceLocator.registerLazySingleton<NewsApi>(()=>NewsApi( // Khởi tạo api khi lần đầu được yêu cầu lấy dữ liệu từ api
   //   dio: serviceLocator(), apiKey: serviceLocator<Constants>().apiKey
   // ));
@@ -94,15 +104,29 @@ setupServiceLocator() async { // Cấu hình dịch vụ
   );
 
   ///Đăng ký các ca sử dụng news và user
-  serviceLocator.registerLazySingleton<TblRepository<User>>(
+  serviceLocator.registerLazySingleton<TblRepository<UserEntity>>(
     () => TblRepositoryImplement(databaseService: serviceLocator<DatabaseService>(), 
       tableName: 'user', 
-      fromJson: (json) => User.fromJson(json), 
+      fromJson: (json) => UserEntity.fromJson(json), 
       toJson: (news) => news.toJson())
   );
 
   //Ca su dung
-  serviceLocator.registerLazySingleton<TblUsecase<User>>(
-    () => TblUsecase(repository: serviceLocator<TblRepository<User>>())
+  serviceLocator.registerLazySingleton<TblUsecase<UserEntity>>(
+    () => TblUsecase(repository: serviceLocator<TblRepository<UserEntity>>())
   );
+
+  serviceLocator.registerLazySingleton<TblRepository<CommentEntity>>(
+    () => TblRepositoryImplement(databaseService: serviceLocator<DatabaseService>(), 
+      tableName: 'comment', 
+      fromJson: (json) => CommentEntity.fromJson(json), 
+      toJson: (comment) => comment.toJson())
+  );
+
+  //Ca su dung
+  serviceLocator.registerLazySingleton<TblUsecase<CommentEntity>>(
+    () => TblUsecase(repository: serviceLocator<TblRepository<CommentEntity>>())
+  );
+
+  // DI
 }

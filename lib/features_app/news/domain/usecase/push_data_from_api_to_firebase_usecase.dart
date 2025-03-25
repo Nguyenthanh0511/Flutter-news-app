@@ -15,6 +15,7 @@ class PushDataFromApiToFirebaseUsecase {
   /// 1. Gọi API lấy danh sách tin tức.
   /// 2. Với mỗi tin tức, gọi hàm insertRecord của repository để đẩy dữ liệu vào Firebase.
 
+
   Future<void> execute() async{
      try {
       final List<NewsEntity> newsList = await getNewsApiUseCase.call();

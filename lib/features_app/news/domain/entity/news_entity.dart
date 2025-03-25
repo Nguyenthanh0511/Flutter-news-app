@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+// Ở đây không dùng freezed nữa
 class NewsEntity {
   final String? code;
   final String? title;
@@ -9,7 +10,10 @@ class NewsEntity {
   final String? publishedAt;
   final String? content;
   final int? viewCount;
-
+  final String? userCode;
+  final int? commentCount; // DDem so luong comment
+  final int? likeCount; // Dem so luong like
+  final String? userCodePost;
   NewsEntity({
     this.code,
     this.title,
@@ -19,6 +23,11 @@ class NewsEntity {
     this.publishedAt,
     this.content,
     this.viewCount,
+    this.userCode,
+    this.commentCount,
+    this.likeCount,
+    this.userCodePost
+
   });
 
   // Factory method để tạo đối tượng từ JSON
@@ -27,11 +36,15 @@ class NewsEntity {
       code: json['code'] as String?,
       title: json['title'] as String?,
       description: json['description'] as String?,
-      url: json['url'] as String?,
+      url: json['url'] as String?, // Làm khóa duy nhất
       imageUrl: json['urlToImage'] as String?,
       publishedAt: json['publishedAt'] as String?,
       content: json['content'] as String?,
       viewCount: json['viewCount'] as int?,
+      userCode: json['userCode'] as String?,
+      commentCount: json['commentCount'] as int?,
+      likeCount: json['likeCount'] as int?,
+      userCodePost: json['userCodePost'] as String?
       
     );
   }
@@ -47,6 +60,10 @@ class NewsEntity {
       'publishedAt': publishedAt,
       'content': content,
       'viewCount': viewCount,
+      'userCode': userCode,
+      'likeCount': likeCount,
+      'commentCount': commentCount,
+      'userCodePost': userCodePost
     };
   }
 
@@ -60,6 +77,10 @@ class NewsEntity {
     String? publishedAt,
     String? content,
     int? viewCount,
+    String? userCode,
+    int? likeCount,
+    int? commentCount,
+    String? userCodePost
   }) {
     return NewsEntity(
       code: code ?? this.code,
@@ -70,6 +91,10 @@ class NewsEntity {
       publishedAt: publishedAt ?? this.publishedAt,
       content: content ?? this.content,
       viewCount: viewCount ?? this.viewCount,
+      userCode: userCode?? this.userCode,
+      likeCount: likeCount?? this.likeCount,
+      commentCount: commentCount ?? this.commentCount,
+      userCodePost: userCodePost ?? this.userCodePost
     );
   }
 }

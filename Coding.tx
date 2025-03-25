@@ -1,0 +1,176 @@
+## 21/03/2025 Xây dựng tính năng comment bài viết
+
+## 22/03/2025 Xây dựng đăng nhập, đăng ký, sử dụng authen
+- Viết promt trên chat gpt 
+
+## 23/03/2025 authen
+- Thiếu capcha cho tính năng firebase authen
+- Vào <project>/<app-module>/build.gradle.kts hoặc <project>/<app-module>/build.gradle thêm
+ '''
+    dependencies {
+    // Import the BoM for the Firebase platform
+    implementation(platform("com.google.firebase:firebase-bom:33.11.0"))
+
+    // Add the dependency for the Firebase Authentication library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation("com.google.firebase:firebase-auth")
+    }
+ '''
+- Cách 2: Vào Firebase console sau đó vào: bạn.
+
+    + Vào phần "Project Settings" -> "Your apps" -> Chọn ứng dụng Android của bạn.
+    + Tiếp đến vào project ở trên terminal ( Đang code ) cd android và chạy lênh: ./gradlew signingReport
+    + Lấy SHA-1 và SHA-256
+
+    ----Lên chat gpt xem
+    
+## 24/03/2025 Sắp xếp danh sách đang bị sai
+
+
+------ Appbar cũ--------
+
+appBar: AppBar(
+        elevation: 1,
+        backgroundColor: Colors.white,
+        title: Row(
+          children: [
+            Expanded(
+              flex: 4,
+              child: Container(
+                height: 40,
+                margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: TextField(
+                  controller: _searchController,
+                  decoration: InputDecoration(
+                    hintText: 'Search by title',
+                    hintStyle: TextStyle(color: Colors.grey[500]),
+                    prefixIcon: const Icon(Icons.search, color: Colors.black),
+                    filled: true,
+                    fillColor: Colors.white,
+                    contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide: const BorderSide(color: Colors.black),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide: const BorderSide(color: Colors.black),
+                    ),
+                  ),
+                  onSubmitted: (value) {
+                    context.read<MainNewsBloc>().add(
+                          LoadInitialNewsEvent(
+                            sortByDate: _sortByDate,
+                            keySearch:
+                                value.trim().isNotEmpty ? value.trim() : null,
+                            // attributeSearch: "title",
+                            // attributeSort: "publishedAt",
+                          ),
+                        );
+                  },
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 3,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 1),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(30),
+                  border: Border.all(color: Colors.grey.shade300, width: 1),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.15),
+                      spreadRadius: 4,
+                      blurRadius: 8,
+                      offset: const Offset(0, 1),
+                    ),
+                  ],
+                ),
+                child: ElevatedButton(
+                  child: Text(
+                    'Date',
+                    style: TextStyle(fontSize: 12),
+                  ),
+                  onPressed: () async {
+                    final DateTimeRange? picked = await showDateRangePicker(
+                      context: context,
+                      firstDate: DateTime(2000),
+                      lastDate: DateTime(2100),
+                      initialDateRange: DateTimeRange(
+                        start: _startDate ?? DateTime.now(),
+                        end: _endDate ?? DateTime.now(),
+                      ),
+                    );
+                    if (picked != null) {
+                      setState(() {
+                        _startDate = picked.start;
+                        _endDate = picked.end;
+                      });
+                      context.read<MainNewsBloc>().add(
+                            LoadInitialNewsEvent(
+                              keySearch:
+                                  _searchController.text.trim().isNotEmpty
+                                      ? _searchController.text.trim()
+                                      : null,
+                              startDate:
+                                  _startDate?.toIso8601String(), // Đã sửa ở đây
+                              endDate:
+                                  _endDate?.toIso8601String(), // Đã sửa ở đây
+                            ),
+                          );
+                    }
+                  },
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: Container(
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<bool>(
+                    value: _sortByDate,
+                    icon: const Icon(Icons.filter_list, color: Colors.black),
+                    dropdownColor: Colors.white,
+                    items: const [
+                      DropdownMenuItem(
+                        value: true,
+                        child: Text(
+                          "Newest",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      DropdownMenuItem(
+                        value: false,
+                        child: Text(
+                          "Oldest",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ],
+                    onChanged: (value) {
+                      if (value != null) {
+                        setState(() => _sortByDate = value);
+                        context.read<MainNewsBloc>().add(
+                              LoadInitialNewsEvent(
+                                sortByDate: value,
+                              ),
+                            );
+                      }
+                    },
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),

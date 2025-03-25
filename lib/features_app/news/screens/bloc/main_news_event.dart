@@ -6,16 +6,23 @@ abstract class MainNewsEvent extends Equatable {
   List<Object?> get props => [];
 }
 
+// Khởi tạo sự kiện
 class LoadInitialNewsEvent extends MainNewsEvent {
   final bool sortByDate;
-  final String? title; // Tham số tìm kiếm theo title
-  const LoadInitialNewsEvent({this.sortByDate = false, this.title});
+  // final String? attributeSort;
+  final String? keySearch; // Tham số tìm kiếm theo title
+  // final String? Function(NewsEntity element)? attributeSortSelector; // Nếu dùng mệnh đề lấy thuộc tính như này thì firebase không lọc được
+  final String? attributeSortSelector;
+  // final String? attributeSearch;
+  final String? startDate;
+  final String? endDate;
+  const LoadInitialNewsEvent({this.sortByDate = false, this.keySearch,this.attributeSortSelector, this.startDate, this.endDate});
   
   @override
-  List<Object?> get props => [sortByDate, title];
+  List<Object?> get props => [sortByDate, keySearch, ];
 }
 
-class LoadMoreNewsEvent extends MainNewsEvent {}
+class LoadMoreNewsEvent extends MainNewsEvent {} // Load thêm phần tử
 
 class RefreshNewsEvent extends MainNewsEvent {}
 
