@@ -51,15 +51,15 @@ flutter run
   - **di/**: Cấu hình Dependency Injection sử dụng GetIt.
   - **network/**: Cấu hình NetworkClient với Dio.
   - **shared/**: Các hằng số và cấu hình chung (ví dụ: file cấu hình Firebase).
-- **features/**
+- **features_app/**
   - **news/**
     - **data/**: Các nguồn dữ liệu, API calls, repository implementations (ví dụ: TblRepositoryImplement, NewsRepositoryImplement).
     - **domain/**: Entity (ví dụ: NewsEntity), repository interface, use cases (ví dụ: GetUseCaseApi, PushDataFromApiToFirebaseUsecase, TblUsecase).
     - **screens/**: UI và BLoC (MainNewsBloc, MainNewsScreen).
-- **app/**
-  - **app.dart**: Widget gốc của ứng dụng (MainApp), cấu hình theme và định tuyến.
-  - **route.dart**: Cấu hình định tuyến sử dụng GoRouter.
-  - **service**: Cấu hình dịch vụ
+  - **app/**
+     - **app.dart**: Widget gốc của ứng dụng (MainApp), cấu hình theme và định tuyến.
+     - **route.dart**: Cấu hình định tuyến sử dụng GoRouter.
+     - **service**: Cấu hình dịch vụ
 ## 🔧 Hướng Dẫn Sử Dụng
 
 ### Khởi Tạo Firebase
