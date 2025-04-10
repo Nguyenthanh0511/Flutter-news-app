@@ -4,8 +4,7 @@ Một ứng dụng tin tức được xây dựng bằng Flutter theo kiến tr�
 
 ## 📌 Tính Năng Chính
 
-- Lấy dữ liệu tin tức từ API thông qua lớp usecase GetUseCaseApi.
-- Đẩy dữ liệu tin tức từ API lên Firebase bằng PushDataFromApiToFirebaseUsecase.
+- Lấy dữ liệu tin tức từ API thông qua lớp usecase GetUseCaseApi. Sau đó đẩy lên firebase ( Sẽ không ảnh hưởng tới request của user xem tin tức )
 - Đọc dữ liệu tin tức từ Firebase và hiển thị qua màn hình chính sử dụng BLoC.
 - Quản lý dependency và khởi tạo Firebase qua ConnectFirebaseUseCase với GetIt.
 - Định tuyến bằng GoRouter và hiển thị giao diện theo BLoC.
@@ -52,16 +51,15 @@ flutter run
   - **di/**: Cấu hình Dependency Injection sử dụng GetIt.
   - **network/**: Cấu hình NetworkClient với Dio.
   - **shared/**: Các hằng số và cấu hình chung (ví dụ: file cấu hình Firebase).
-- **features/**
+- **features_app/**
   - **news/**
     - **data/**: Các nguồn dữ liệu, API calls, repository implementations (ví dụ: TblRepositoryImplement, NewsRepositoryImplement).
     - **domain/**: Entity (ví dụ: NewsEntity), repository interface, use cases (ví dụ: GetUseCaseApi, PushDataFromApiToFirebaseUsecase, TblUsecase).
-    - **presentation/**: UI và BLoC (MainNewsBloc, MainNewsScreen).
-- **app/**
-  - **app.dart**: Widget gốc của ứng dụng (MainApp), cấu hình theme và định tuyến.
-  - **route.dart**: Cấu hình định tuyến sử dụng GoRouter.
-  - **home_screen.dart**: Màn hình chính (nếu cần).
-
+    - **screens/**: UI và BLoC (MainNewsBloc, MainNewsScreen).
+  - **app/**
+     - **app.dart**: Widget gốc của ứng dụng (MainApp), cấu hình theme và định tuyến.
+     - **route.dart**: Cấu hình định tuyến sử dụng GoRouter.
+     - **service**: Cấu hình dịch vụ
 ## 🔧 Hướng Dẫn Sử Dụng
 
 ### Khởi Tạo Firebase
