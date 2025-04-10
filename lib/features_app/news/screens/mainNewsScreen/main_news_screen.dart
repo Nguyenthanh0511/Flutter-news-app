@@ -130,7 +130,7 @@ class _MainNewsScreenState extends State<MainNewsScreen> {
               ),
             ),
             Expanded(
-              flex: 2,
+              flex: 3,
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 1),
                 decoration: BoxDecoration(

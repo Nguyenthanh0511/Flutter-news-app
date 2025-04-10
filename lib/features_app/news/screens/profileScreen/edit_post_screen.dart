@@ -60,8 +60,9 @@ class _EditPostScreenState extends State<EditPostScreen> {
         id: codeNews,
         newsEntity: updatedNews,
       ));
-      Navigator.pop(context);
+      Navigator.pop(context); // Đang bị sai ở đây nhé
     } catch (e) {
+      print('Lỗi khi cập nhật bài viết: $e');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Lỗi khi cập nhật bài viết: $e')),
       );
