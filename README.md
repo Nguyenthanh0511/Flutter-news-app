@@ -4,7 +4,6 @@ Một ứng dụng tin tức được xây dựng bằng Flutter theo kiến tr�
 
 ## 📌 Tính Năng Chính
 
-- Lấy dữ liệu tin tức từ API thông qua lớp usecase GetUseCaseApi. Sau đó đẩy lên firebase ( Sẽ không ảnh hưởng tới request của user xem tin tức )
 - Đọc dữ liệu tin tức từ Firebase và hiển thị qua màn hình chính sử dụng BLoC.
 - Quản lý dependency và khởi tạo Firebase qua ConnectFirebaseUseCase với GetIt.
 - Định tuyến bằng GoRouter và hiển thị giao diện theo BLoC.
